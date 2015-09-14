@@ -1,8 +1,29 @@
+
+<p align="center" style="padding: 0; margin: 0;">
+  <img src="./merz.png">
+</p>
+<p align="center">
+  <a href="https://codeclimate.com/github/tunnckoCore/merz">
+    <img src="https://img.shields.io/codeclimate/github/tunnckoCore/merz.svg">
+  </a>
+  <a href="https://github.com/feross/standard">
+  <img src="https://img.shields.io/badge/code%20style-standard-brightgreen.svg">
+  </a>
+  <a href="https://travis-ci.org/tunnckoCore/merz">
+    <img src="https://img.shields.io/travis/tunnckoCore/merz.svg">
+  </a>
+  <a href="https://coveralls.io/r/tunnckoCore/merz">
+    <img src="https://img.shields.io/coveralls/tunnckoCore/merz.svg">
+  </a>
+  <a href="https://david-dm.org/tunnckoCore/merz">
+    <img src="https://img.shields.io/david/tunnckoCore/merz.svg">
+  </a>
+</p>
+
+
 # [merz][author-www-url] [![npmjs.com][npmjs-img]][npmjs-url] [![The MIT License][license-img]][license-url] 
 
 > Wrapper to handle completion and errors of sync and async functions, promises, generators, streams, observables and child processes.
-
-[![code climate][codeclimate-img]][codeclimate-url] [![standard code style][standard-img]][standard-url] [![travis build status][travis-img]][travis-url] [![coverage status][coveralls-img]][coveralls-url] [![dependency status][david-img]][david-url]
 
 
 ## Install

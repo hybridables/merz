@@ -1,5 +1,5 @@
 /*!
- * always-done <https://github.com/tunnckoCore/always-done>
+ * merz <https://github.com/tunnckoCore/merz>
  *
  * Copyright (c) 2015 Charlike Mike Reagent <@tunnckoCore> (http://www.tunnckocore.tk)
  * Released under the MIT license.
@@ -17,16 +17,16 @@ function successJsonParse (callback) {
   callback(null, JSON.parse('{"foo":"bar"}'))
 }
 
-function failJsonParse () {
-  JSON.parse('{"f')
-}
-
-function twoArgs (callback) {
-  callback(null, 1, 2)
+function notSpreadArrays (callback) {
+  callback(null, [1, 2], 3, [4, 5])
 }
 
 function readFile (cb) {
   fs.readFile('package.json', 'utf8', cb)
+}
+
+function twoArgs (callback) {
+  callback(null, 1, 2)
 }
 
 function failure (callback) {
@@ -41,15 +41,6 @@ test('should handle a successful callback', function (done) {
   })
 })
 
-test('should handle thrown errors', function (done) {
-  merz(failJsonParse)(function (err, res) {
-    test.ifError(!err)
-    test.ok(err instanceof Error)
-    test.strictEqual(res, undefined)
-    done()
-  })
-})
-
 test('should handle an errored callback', function (done) {
   merz(failure)(function (err, res) {
     test.ifError(!err)
@@ -60,11 +51,21 @@ test('should handle an errored callback', function (done) {
   })
 })
 
-test('should pass all arguments to the completion callback', function (done) {
+test('should spread arguments - e.g. cb(null, 1, 2)', function (done) {
   merz(twoArgs)(function (err, one, two) {
     test.ifError(err)
     test.strictEqual(one, 1)
     test.strictEqual(two, 2)
+    done()
+  })
+})
+
+test('should not spread arrays - e.g. cb(null, [1, 2], 3)', function (done) {
+  merz(notSpreadArrays)(function (err, arrOne, three, arrTwo) {
+    test.ifError(err)
+    test.deepEqual(arrOne, [1, 2])
+    test.strictEqual(three, 3)
+    test.deepEqual(arrTwo, [4, 5])
     done()
   })
 })
@@ -82,17 +83,6 @@ test('should accepts async function directly - fs.readFile - success', function 
   merz(fs.readFile)('package.json', 'utf8', function (err, res) {
     test.ifError(err)
     test.equal(typeof res, 'string')
-    test.ok(res.indexOf('"license": "MIT"') !== -1)
-    done()
-  })
-})
-
-test('should accepts async function directly - fs.readFile - failure', function (done) {
-  merz(fs.readFile)('package.json', 'utf8', function (err, res) {
-    test.ifError(err)
-    test.equal(err, null)
-    test.equal(typeof res, 'string')
-    test.ok(res.indexOf('"main": "index.js"') !== -1)
     test.ok(res.indexOf('"license": "MIT"') !== -1)
     done()
   })

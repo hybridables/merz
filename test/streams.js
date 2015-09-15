@@ -1,5 +1,5 @@
 /*!
- * always-done <https://github.com/tunnckoCore/always-done>
+ * merz <https://github.com/tunnckoCore/merz>
  *
  * Copyright (c) 2015 Charlike Mike Reagent <@tunnckoCore> (http://www.tunnckocore.tk)
  * Released under the MIT license.
@@ -40,6 +40,10 @@ function unpiped () {
   return fs.createReadStream(exists)
 }
 
+function unpipedFailure () {
+  return fs.createReadStream(notExists)
+}
+
 test('should handle a successful stream', function (done) {
   merz(success)(function (err, res) {
     test.ifError(err)
@@ -49,10 +53,6 @@ test('should handle a successful stream', function (done) {
   })
 })
 
-// works, but does nothing, IMHO
-// it works even without `dezalgo` and `once` modulesin the core,
-// so.. maybe good codebase?!?! Owned.
-//
 test('should handle a successful stream and call the callback once', function (done) {
   merz(function (cb) {
     return success().on('end', function () { cb(null, 3) })
@@ -68,6 +68,17 @@ test('should handle an errored stream', function (done) {
   merz(failure)(function (err, res) {
     test.ifError(!err)
     test.ok(err instanceof Error)
+    test.strictEqual(err.code, 'ENOENT')
+    test.strictEqual(res, undefined)
+    done()
+  })
+})
+
+test('should handle an error unpiped readable stream', function (done) {
+  merz(unpipedFailure)(function (err, res) {
+    test.ifError(!err)
+    test.ok(err instanceof Error)
+    test.strictEqual(err.code, 'ENOENT')
     test.strictEqual(res, undefined)
     done()
   })

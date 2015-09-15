@@ -1,5 +1,5 @@
 /*!
- * always-done <https://github.com/tunnckoCore/always-done>
+ * merz <https://github.com/tunnckoCore/merz>
  *
  * Copyright (c) 2015 Charlike Mike Reagent <@tunnckoCore> (http://www.tunnckocore.tk)
  * Released under the MIT license.
@@ -42,6 +42,7 @@ test('should handle failing exec', function (done) {
   merz(execFail)(function (err, res) {
     test.ifError(!err)
     test.ok(err instanceof Error)
+    test.strictEqual(err.message, 'exited with error code: 127')
     test.strictEqual(res, undefined)
     done()
   })
@@ -60,6 +61,7 @@ test('should handle failing spawn', function (done) {
   merz(spawnFail)(function (err, res) {
     test.ifError(!err)
     test.ok(err instanceof Error)
+    test.strictEqual(err.code, 'ENOENT')
     test.strictEqual(res, undefined)
     done()
   })

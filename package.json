@@ -1,6 +1,6 @@
 {
   "name": "merz",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "description": "Wrapper to handle completion and errors of sync and async functions, promises, generators, streams, observables and child processes.",
   "repository": "tunnckoCore/merz",
   "author": "Charlike Mike Reagent <@tunnckoCore> (http://www.tunnckocore.tk)",
@@ -10,7 +10,7 @@
     "test": "standard && node test.js"
   },
   "dependencies": {
-    "always-done": "^0.5.1",
+    "always-done": "^0.6.0",
     "co": "^4.6.0",
     "handle-arguments": "^3.0.2",
     "is-child-process": "^1.0.0",
